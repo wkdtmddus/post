@@ -4,7 +4,6 @@ import com.inoc.post.dto.PostRequestDto;
 import com.inoc.post.dto.PostResponseDto;
 import com.inoc.post.entity.Post;
 import com.inoc.post.service.PostService;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -16,8 +15,8 @@ import java.util.Map;
 public class PostController {
     private final PostService postService;
 
-    public PostController(JdbcTemplate jdbcTemplate) {
-        this.postService = new PostService(jdbcTemplate);
+    public PostController(PostService postService) {
+        this.postService = postService;
     }
 
     private final Map<Long, Post> postList = new HashMap<>();

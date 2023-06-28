@@ -4,15 +4,14 @@ import com.inoc.post.dto.PostRequestDto;
 import com.inoc.post.dto.PostResponseDto;
 import com.inoc.post.entity.Post;
 import com.inoc.post.repository.PostRepository;
-import org.springframework.jdbc.core.JdbcTemplate;
 import java.util.List;
 
 public class PostService {
 
     private final PostRepository postRepository;
 
-    public PostService(JdbcTemplate jdbcTemplate) {
-        this.postRepository = new PostRepository(jdbcTemplate);
+    public PostService(PostRepository postRepository) {
+        this.postRepository = postRepository;
     }
 
     public List<PostResponseDto> getPost() {
