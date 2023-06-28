@@ -4,8 +4,11 @@ import com.inoc.post.dto.PostRequestDto;
 import com.inoc.post.dto.PostResponseDto;
 import com.inoc.post.entity.Post;
 import com.inoc.post.repository.PostRepository;
+import org.springframework.stereotype.Service;
+
 import java.util.List;
 
+@Service
 public class PostService {
 
     private final PostRepository postRepository;
