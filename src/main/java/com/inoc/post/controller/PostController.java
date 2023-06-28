@@ -14,35 +14,31 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api")
 public class PostController {
-    private final JdbcTemplate jdbcTemplate;
+    private final PostService postService;
 
     public PostController(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
+        this.postService = new PostService(jdbcTemplate);
     }
 
     private final Map<Long, Post> postList = new HashMap<>();
 
     @GetMapping("/posts")
     public List<PostResponseDto> getPosts() {
-        PostService postService = new PostService(jdbcTemplate);
         return postService.getPost();
     }
 
     @PostMapping("/post")
     public PostResponseDto createPost(@RequestBody PostRequestDto requestDto) {
-        PostService postService = new PostService(jdbcTemplate);
         return postService.createPost(requestDto);
     }
 
     @PutMapping("/post/{id}")
     public Long updatePost(@PathVariable Long id, @RequestBody PostRequestDto requestDto) {
-        PostService postService = new PostService(jdbcTemplate);
         return postService.updatePost(id, requestDto);
     }
 
     @DeleteMapping("/post/{id}")
     public Long deletePost(@PathVariable Long id) {
-        PostService postService = new PostService(jdbcTemplate);
         return postService.deletePost(id);
     }
 }
