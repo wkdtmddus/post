@@ -16,4 +16,11 @@ public class PostResponseDto {
         this.title = post.getTitle();
         this.content = post.getContent();
     }
+
+    public PostResponseDto(Long id, String author, String title, String content) {
+        this.id = id;
+        this.author = author;
+        this.title = title;
+        this.content = content;
+    }
 }
