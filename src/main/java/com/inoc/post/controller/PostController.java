@@ -2,13 +2,11 @@ package com.inoc.post.controller;
 
 import com.inoc.post.dto.PostRequestDto;
 import com.inoc.post.dto.PostResponseDto;
-import com.inoc.post.entity.Post;
 import com.inoc.post.service.PostService;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
 
 @RestController
 @RequestMapping("/api")
@@ -18,8 +16,6 @@ public class PostController {
     public PostController(PostService postService) {
         this.postService = postService;
     }
-
-    private final Map<Long, Post> postList = new HashMap<>();
 
     @GetMapping("/posts")
     public List<PostResponseDto> getPosts() {

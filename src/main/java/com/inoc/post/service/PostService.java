@@ -24,7 +24,7 @@ public class PostService {
 
     public PostResponseDto createPost(PostRequestDto requestDto) {
         // RequestDto -> Entity
-        Post post = new Post();
+        Post post = new Post(requestDto);
         // DB 저장
         Post savePost = postRepository.save(post);
         // Entity -> ResponseDto
