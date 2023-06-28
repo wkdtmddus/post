@@ -35,4 +35,27 @@ public class PostController {
 
         return postResponseDto;
     }
+
+    @PutMapping("/post/{id}")
+    public Long updatePost(@PathVariable Long id, @RequestBody PostRequestDto requestDto) {
+        if (postList.containsKey(id)) {
+            Post post = postList.get(id);
+
+            post.update(requestDto);
+
+            return post.getId();
+        } else {
+            throw new IllegalArgumentException("존재하지 않습니다.");
+        }
+    }
+
+    @DeleteMapping("/post/{id}")
+    public Long deletePost(@PathVariable Long id) {
+        if (postList.containsKey(id)) {
+            postList.remove(id);
+            return id;
+        } else {
+            throw new IllegalArgumentException("존재하지 않습니다.");
+        }
+    }
 }
