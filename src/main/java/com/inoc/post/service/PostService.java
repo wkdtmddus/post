@@ -5,6 +5,7 @@ import com.inoc.post.dto.PostResponseDto;
 import com.inoc.post.entity.Post;
 import com.inoc.post.repository.PostRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -18,7 +19,7 @@ public class PostService {
     }
 
     public List<PostResponseDto> getPost() {
-        return postRepository.findAll();
+        return postRepository.findAll().stream().map(PostResponseDto::new).toList();
     }
 
     public PostResponseDto createPost(PostRequestDto requestDto) {
@@ -31,29 +32,28 @@ public class PostService {
         return postResponseDto;
     }
 
+    @Transactional
     public Long updatePost(Long id, PostRequestDto requestDto) {
         // DB에 존재하는지 확인
-        Post post = postRepository.findById(id);
-        if(post != null) {
+        Post post = findPost(id);
+
             // post 내용 수정
-            postRepository.update(id, requestDto);
+            post.update(requestDto);
 
             return id;
-        } else {
-            throw new IllegalArgumentException("존재하지 않습니다.");
-        }
     }
 
     public Long deletePost(Long id) {
         // DB에 존재하는지 확인
-        Post post = postRepository.findById(id);
-        if(post != null) {
+        Post post = findPost(id);
+
             // post 삭제
-            postRepository.delete(id);
+            postRepository.delete(post);
 
             return id;
-        } else {
-            throw new IllegalArgumentException("존재하지 않습니다.");
-        }
+    }
+
+    private Post findPost(Long id) {
+        return postRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("존재하지 않습니다."));
     }
 }
