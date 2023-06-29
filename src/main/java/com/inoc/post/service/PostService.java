@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PostService {
@@ -18,8 +19,12 @@ public class PostService {
         this.postRepository = postRepository;
     }
 
-    public List<PostResponseDto> getPost() {
+    public List<PostResponseDto> getPosts() {
         return postRepository.findAllByOrderByModifiedAtDesc().stream().map(PostResponseDto::new).toList();
+    }
+
+    public Optional<Post> getPostById(Long id) {
+        return postRepository.findById(id);
     }
 
     public PostResponseDto createPost(PostRequestDto requestDto) {
@@ -37,20 +42,25 @@ public class PostService {
         // DB에 존재하는지 확인
         Post post = findPost(id);
 
+        if (post.getPassword().equals(requestDto.getPassword())) {
             // post 내용 수정
             post.update(requestDto);
-
             return id;
+        } else {
+            throw new IllegalArgumentException("비밀번호가 틀렸습니다.");
+        }
     }
 
-    public Long deletePost(Long id) {
+    public Long deletePost(Long id, PostRequestDto requestDto) {
         // DB에 존재하는지 확인
         Post post = findPost(id);
 
-            // post 삭제
+        if (post.getPassword().equals(requestDto.getPassword())) {
             postRepository.delete(post);
-
             return id;
+        } else {
+            throw new IllegalArgumentException("비밀번호가 틀렸습니다.");
+        }
     }
 
     private Post findPost(Long id) {

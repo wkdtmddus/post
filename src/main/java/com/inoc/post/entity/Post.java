@@ -17,6 +17,7 @@ public class Post extends Timestamped {
     private Long id;
     @Column(name = "author", nullable = false)
     private String author;
+    @Column(name = "password", nullable = false)
     private String password;
     @Column(name = "title", nullable = false)
     private String title;
