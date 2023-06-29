@@ -33,8 +33,7 @@ public class PostService {
         // DB 저장
         Post savePost = postRepository.save(post);
         // Entity -> ResponseDto
-        PostResponseDto postResponseDto = new PostResponseDto(post);
-        return postResponseDto;
+        return new PostResponseDto(savePost);
     }
 
     @Transactional
