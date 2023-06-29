@@ -62,6 +62,18 @@ public class PostService {
         }
     }
 
+    public Long deletePost2(Long id, String password) {
+        // DB에 존재하는지 확인
+        Post post = findPost(id);
+
+        if (post.getPassword().equals(password)){
+            postRepository.delete(post);
+            return id;
+        } else {
+            throw new IllegalArgumentException("비밀번호가 틀렸습니다.");
+        }
+    }
+
     private Post findPost(Long id) {
         return postRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("존재하지 않습니다."));
     }
