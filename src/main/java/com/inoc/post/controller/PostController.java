@@ -2,12 +2,10 @@ package com.inoc.post.controller;
 
 import com.inoc.post.dto.PostRequestDto;
 import com.inoc.post.dto.PostResponseDto;
-import com.inoc.post.entity.Post;
 import com.inoc.post.service.PostService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 
 @RestController
@@ -25,7 +23,7 @@ public class PostController {
     }
 
     @GetMapping("/post/{id}")
-    public Optional<Post> getPostById(@PathVariable Long id) {
+    public PostResponseDto getPostById(@PathVariable Long id) {
         return postService.getPostById(id);
     }
 
